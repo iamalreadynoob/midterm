@@ -1,0 +1,1 @@
+send,users,terminal,settings,english,spanish,finnish,german,italian,turkish,change language,change theme,reset,back,version,developed by
