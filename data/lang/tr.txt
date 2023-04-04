@@ -1,1 +1,1 @@
-gönder,kullanıcılar,terminal,ayarlar,ingilizce,ispanyolca,fince,almanca,italyanca,türkçe,dil değiş,tema değiş,sıfırla,geri,versiyon,geliştiren
+gönder,kullanıcılar,terminal,ayarlar,ingilizce,ispanyolca,fince,almanca,italyanca,türkçe,dil değiş,tema değiş,sıfırla,geri,versiyon,geliştiren,ad,soyad,email,admin,vip üye,üye,ekle,kaldır,gönderen,alan,herkes

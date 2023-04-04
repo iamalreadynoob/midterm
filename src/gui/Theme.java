@@ -71,19 +71,70 @@ public class Theme implements IFrames
     @Override
     public void sendFrame()
     {
+        Screen.sendHeader.setForeground(headerColor);
 
+        Screen.specificReceiver.setBackground(buttonColor);
+        Screen.specificReceiver.setForeground(textColor);
+
+        Screen.from.setForeground(headerColor);
+
+        Screen.to.setForeground(headerColor);
+
+        Screen.mailText.setBackground(buttonColor);
+        Screen.mailText.setForeground(textColor);
+
+        Screen.sendMail.setBackground(buttonColor);
+        Screen.sendMail.setForeground(textColor);
+
+        Screen.senderList.setBackground(buttonColor);
+        Screen.senderList.setForeground(textColor);
+
+        Screen.receiverList.setBackground(buttonColor);
+        Screen.receiverList.setForeground(textColor);
     }
 
     @Override
     public void userFrame()
     {
+        Screen.userHeader.setForeground(headerColor);
 
+        Screen.nameSection.setBackground(buttonColor);
+        Screen.nameSection.setForeground(textColor);
+
+        Screen.surnameSection.setBackground(buttonColor);
+        Screen.surnameSection.setForeground(textColor);
+
+        Screen.emailSection.setBackground(buttonColor);
+        Screen.emailSection.setForeground(textColor);
+
+        Screen.exceptionSection.setForeground(headerColor);
+
+        Screen.priorityList.setBackground(buttonColor);
+        Screen.priorityList.setForeground(textColor);
+
+        Screen.userList.setBackground(buttonColor);
+        Screen.userList.setForeground(textColor);
+
+        Screen.addUser.setBackground(buttonColor);
+        Screen.addUser.setForeground(textColor);
+
+        Screen.singleMail.setBackground(buttonColor);
+        Screen.singleMail.setForeground(textColor);
+
+        Screen.removeUser.setBackground(buttonColor);
+        Screen.removeUser.setForeground(textColor);
     }
 
     @Override
     public void terminalFrame()
     {
+        Screen.terminalHeader.setForeground(headerColor);
 
+        Screen.cmdArea.setBackground(buttonColor);
+        Screen.cmdArea.setForeground(textColor);
+
+        Screen.terminalHelp.setBackground(buttonColor);
+        Screen.terminalHelp.setForeground(textColor);
     }
 
     @Override

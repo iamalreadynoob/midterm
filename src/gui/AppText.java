@@ -1,5 +1,6 @@
 package gui;
 
+import database.Clients;
 import database.Communicator;
 import database.Language;
 
@@ -7,10 +8,13 @@ import java.util.ArrayList;
 
 public class AppText extends Communicator implements IFrames
 {
-    ArrayList<String> script;
-    protected AppText()
+    private ArrayList<String> script;
+    private Clients clients;
+    protected AppText(Clients clients)
     {
         super("data/lang/" + new Language().getLanguage() + ".txt");
+        this.clients = clients;
+
         script = read();
 
         mainFrame();
@@ -33,19 +37,47 @@ public class AppText extends Communicator implements IFrames
     @Override
     public void sendFrame()
     {
+        Screen.sendHeader.setText(script.get(0).toUpperCase());
+        Screen.from.setText(script.get(24).toUpperCase() + ":");
+        Screen.to.setText(script.get(25).toUpperCase() + ":");
+        Screen.sendMail.setText(script.get(0));
 
+        Screen.receiverList.addItem(script.get(26));
+        Screen.receiverList.addItem(script.get(20));
+        Screen.receiverList.addItem(script.get(21));
+
+        for (int i = 0; i < clients.getClientNames().size(); i++)
+        {
+            if (clients.getClientPriorities().get(i).equals("0")) Screen.senderList.addItem(clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i));
+
+            Screen.receiverList.addItem(clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i));
+        }
     }
 
     @Override
     public void userFrame()
     {
+        Screen.userHeader.setText(script.get(1).toUpperCase());
+        Screen.nameSection.setText(script.get(16));
+        Screen.surnameSection.setText(script.get(17));
+        Screen.emailSection.setText(script.get(18));
+        Screen.priorityList.addItem(script.get(19));
+        Screen.priorityList.addItem(script.get(20));
+        Screen.priorityList.addItem(script.get(21));
+        Screen.addUser.setText(script.get(22));
+        Screen.singleMail.setText(script.get(0));
+        Screen.removeUser.setText(script.get(23));
 
+        for (int i = 0; i < clients.getClientNames().size(); i++)
+        {
+            Screen.userList.addItem(clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i));
+        }
     }
 
     @Override
     public void terminalFrame()
     {
-
+        Screen.terminalHeader.setText(script.get(2).toUpperCase());
     }
 
     @Override

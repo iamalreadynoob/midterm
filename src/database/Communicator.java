@@ -62,7 +62,7 @@ public abstract class Communicator
         return requested;
     }
 
-    private String getRawData()
+    public String getRawData()
     {
         String raw = null;
 

@@ -1,1 +1,1 @@
-send,users,terminal,settings,english,spanish,finnish,german,italian,turkish,change language,change theme,reset,back,version,developed by
+send,users,terminal,settings,english,spanish,finnish,german,italian,turkish,change language,change theme,reset,back,version,developed by,name,surname,email,admin,vip member,member,add,remove,from,to,all

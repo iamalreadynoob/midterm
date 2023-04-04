@@ -1,8 +1,13 @@
+import database.Clients;
 import gui.Screen;
 
-public class Main {
+public class Main
+{
+
     public static void main(String[] args)
     {
-        new Screen();
+        Clients clients = new Clients();
+
+        new Screen(clients);
     }
 }
