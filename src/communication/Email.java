@@ -4,10 +4,7 @@ import database.Communicator;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -18,15 +15,13 @@ import java.util.Properties;
 
 public class Email extends Communicator
 {
-    private String server, adminID,sender, text, password;
+    private String adminID,sender, text, password;
     private ArrayList<String> receiver;
     private MimeBodyPart attachment;
     private boolean isAttached;
     public Email(String sender, String adminID, ArrayList<String> receiver, String text)
     {
         super("data/admins.txt");
-
-        server = "smtp.gmail.com";
 
         this.adminID = adminID;
         this.sender = sender;
@@ -44,23 +39,30 @@ public class Email extends Communicator
     private void smtp()
     {
         Properties properties = System.getProperties();
-        properties.setProperty("mail.smtp.host", server);
-        properties.setProperty("mail.smtp.port", "587");
-        properties.setProperty("mail.smtp.auth", "true");
-        properties.setProperty("mail.smtp.starttls.enable", "true");
-
-        Session session = Session.getDefaultInstance(properties);
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp-mail.outlook.com");
+        properties.put("mail.smtp.port", "587");
+        properties.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
 
         try
         {
+            Authenticator auth = new javax.mail.Authenticator()
+            {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(sender, password);
+                }
+            };
+
+            Session session = Session.getInstance(properties, auth);
+
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sender));
 
-            for (String r: receiver)
-            {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(r));
-            }
+            for (String r: receiver) {message.addRecipient(Message.RecipientType.TO, new InternetAddress(r));}
 
+            message.setSubject("COMMUNICATOR");
             message.setText(text);
 
             if (isAttached)
@@ -70,10 +72,8 @@ public class Email extends Communicator
                 message.setContent(multipart);
             }
 
-            Transport transport = session.getTransport();
-            transport.connect(server, sender, password);
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
+            Transport.send(message);
+
         }catch (MessagingException e){e.printStackTrace();}
     }
 

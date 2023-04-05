@@ -25,6 +25,17 @@ public class AppText extends Communicator implements IFrames
         back();
     }
 
+    public AppText(Clients clients, boolean onlyReload)
+    {
+        super("data/lang/" + new Language().getLanguage() + ".txt");
+
+        if (onlyReload)
+        {
+            script = read();
+            this.clients = clients;
+        }
+    }
+
     @Override
     public void mainFrame()
     {
@@ -97,5 +108,36 @@ public class AppText extends Communicator implements IFrames
     public void back()
     {
         Screen.back.setText(script.get(13));
+    }
+
+    public void reload(Frames frame)
+    {
+        switch (frame)
+        {
+            case USER_FRAME:
+                Screen.userList.removeAllItems();
+                for (int i = 0; i < clients.getClientNames().size(); i++)
+                {
+                    Screen.userList.addItem(clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i));
+                }
+                break;
+
+            case SEND_FRAME:
+                Screen.senderList.removeAllItems();
+                Screen.receiverList.removeAllItems();
+
+                Screen.receiverList.addItem(script.get(26));
+                Screen.receiverList.addItem(script.get(20));
+                Screen.receiverList.addItem(script.get(21));
+
+                for (int i = 0; i < clients.getClientNames().size(); i++)
+                {
+                    if (clients.getClientPriorities().get(i).equals("0")) Screen.senderList.addItem(clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i));
+
+                    Screen.receiverList.addItem(clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i));
+                }
+                break;
+
+        }
     }
 }

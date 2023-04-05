@@ -75,6 +75,8 @@ public class Positions implements IFrames
 
         Screen.mailText.setBounds(10, 150, 400, 200);
         Screen.mailText.setBorder(null);
+        Screen.mailText.setLineWrap(true);
+        Screen.mailText.setWrapStyleWord(true);
 
         Screen.sendMail.setBounds(450, 320, 100, 30);
         Screen.sendMail.setBorder(null);
@@ -105,7 +107,7 @@ public class Positions implements IFrames
         Screen.addUser.setBounds(530, 100, 60, 30);
         Screen.addUser.setBorder(null);
 
-        Screen.exceptionSection.setBounds(10, 150, 300, 30);
+        Screen.exceptionSection.setBounds(10, 150, 580, 30);
         Screen.exceptionSection.setBackground(null);
         Screen.exceptionSection.setBorder(null);
         Screen.exceptionSection.setEditable(false);
@@ -132,6 +134,8 @@ public class Positions implements IFrames
 
         Screen.cmdArea.setBounds(10, 100, 490, 250);
         Screen.cmdArea.setBorder(null);
+        Screen.cmdArea.setLineWrap(true);
+        Screen.cmdArea.setWrapStyleWord(true);
 
         Screen.terminalHelp.setBounds(530, 300, 50, 50);
         Screen.terminalHelp.setBorder(null);

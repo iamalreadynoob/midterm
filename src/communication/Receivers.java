@@ -14,13 +14,14 @@ public class Receivers
         receivers = new ArrayList<>();
 
         int index = receiverList.getSelectedIndex();
+
         String sender = senderList.getSelectedItem().toString();
+        Senders temp = new Senders(sender, clients);
 
         if (index == 0)
         {
             for (String r: clients.getClientEmails())
             {
-                Senders temp = new Senders(sender, clients);
                 if (!temp.findMail().equals(r)) receivers.add(r);
             }
         }
@@ -34,7 +35,7 @@ public class Receivers
                 }
             }
         }
-        else receivers.add(new Senders(sender, clients).findMail());
+        else receivers.add(new Senders(receiverList.getSelectedItem().toString(), clients).findMail());
     }
 
     public ArrayList<String> getReceivers() {return receivers;}

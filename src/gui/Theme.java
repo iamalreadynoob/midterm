@@ -73,8 +73,7 @@ public class Theme implements IFrames
     {
         Screen.sendHeader.setForeground(headerColor);
 
-        Screen.specificReceiver.setBackground(buttonColor);
-        Screen.specificReceiver.setForeground(textColor);
+        Screen.specificReceiver.setForeground(headerColor);
 
         Screen.from.setForeground(headerColor);
 

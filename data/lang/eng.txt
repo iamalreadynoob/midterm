@@ -1,1 +1,1 @@
-send,users,terminal,settings,english,spanish,finnish,german,italian,turkish,change language,change theme,reset,back,version,developed by,name,surname,email,admin,vip member,member,add,remove,from,to,all
+send,users,terminal,settings,english,spanish,finnish,german,italian,turkish,change language,change theme,reset,back,version,developed by,name,surname,email,admin,vip member,member,add,remove,from,to,all,no name,no surname,no email,invalid email,email is already used,no priority,please write your password here then click the add button once again:

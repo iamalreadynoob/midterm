@@ -31,7 +31,7 @@ public class ReservedShortcuts
     private void fill()
     {
         commands.add("/test");
-        commands.add("/weather");
+        commands.add("/anime");
     }
 
 }

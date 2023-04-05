@@ -1,9 +1,6 @@
 package database;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public abstract class Communicator
@@ -44,6 +41,32 @@ public abstract class Communicator
         }
 
         return data;
+    }
+
+    protected void write(ArrayList<String> infos)
+    {
+        String newSave = null;
+
+        for (String info: infos)
+        {
+            if (newSave == null) newSave = info;
+            else newSave = newSave +  "," + info;
+        }
+
+        try
+        {
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(newSave);
+            writer.close();
+        }catch (IOException e){e.printStackTrace();}
+    }
+
+    protected void change(String info, int at)
+    {
+        ArrayList<String> infos = read();
+        infos.set(at, info);
+
+        write(infos);
     }
 
     public ArrayList<String> credits()

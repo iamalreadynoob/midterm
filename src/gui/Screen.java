@@ -45,7 +45,7 @@ public class Screen extends JFrame
         new Visibility().hide();
         new Theme(this);
         new AppText(clients);
-        new Buttons(clients);
+        new Buttons(clients, this);
         new Positions();
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

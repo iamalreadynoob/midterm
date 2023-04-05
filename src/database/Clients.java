@@ -1,9 +1,14 @@
 package database;
 
+import communication.Admins;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,6 +55,88 @@ public class Clients
             clientPriorities = temp.stream().map(column -> column.get("priority")).collect(Collectors.toList());
         }
         catch (Exception e){e.printStackTrace();}
+    }
+
+    public void add(String name, String surname, String email, String priority)
+    {
+        clientNames.add(name);
+        clientSurnames.add(surname);
+        clientEmails.add(email);
+        clientPriorities.add(priority);
+
+        int id = Integer.parseInt(clientIDs.get(clientIDs.size() - 1)) + 1;
+        clientIDs.add(Integer.toString(id));
+
+        rewrite();
+    }
+
+    public void add(String name, String surname, String email, String priority, String password)
+    {
+        clientNames.add(name);
+        clientSurnames.add(surname);
+        clientEmails.add(email);
+        clientPriorities.add(priority);
+
+        int id = Integer.parseInt(clientIDs.get(clientIDs.size() - 1)) + 1;
+        clientIDs.add(Integer.toString(id));
+
+        rewrite();
+
+        new Admins().addAdminPassword(clientIDs.get(clientIDs.size()-1), password);
+    }
+
+
+    public void remove(String nameSurname)
+    {
+        Integer id = null;
+        Integer deletedID = null;
+
+        for (int i = 0; i < clientNames.size(); i++)
+        {
+            String temp = clientNames.get(i) + " " + clientSurnames.get(i);
+
+            if (nameSurname.equals(temp))
+            {
+                id = i;
+                deletedID = Integer.parseInt(clientIDs.get(i));
+                break;
+            }
+        }
+
+        clientIDs.remove((int) id);
+        clientNames.remove((int) id);
+        clientSurnames.remove((int) id);
+        clientEmails.remove((int) id);
+        clientPriorities.remove((int) id);
+
+        for (int i = id; i < clientIDs.size(); i++)
+        {
+            clientIDs.set(i, deletedID.toString());
+            deletedID++;
+        }
+
+        rewrite();
+
+    }
+
+    private void rewrite()
+    {
+        try
+        {
+            File csvFile = new File("data/clients.csv");
+            FileWriter writer = new FileWriter(csvFile);
+            CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
+
+            printer.printRecord("id", "name", "surname", "email", "priority");
+
+            for (int i = 0; i < clientNames.size(); i++)
+            {
+                printer.printRecord(clientIDs.get(i), clientNames.get(i), clientSurnames.get(i), clientEmails.get(i), clientPriorities.get(i));
+            }
+
+            printer.close();
+
+        }catch (IOException e){e.printStackTrace();}
     }
 
 }
