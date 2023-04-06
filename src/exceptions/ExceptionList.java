@@ -30,6 +30,8 @@ public class ExceptionList extends Communicator
         exceptions.add(script.get(30));
         exceptions.add(script.get(31));
         exceptions.add(script.get(32));
+        exceptions.add(script.get(34));
+        exceptions.add(script.get(35));
     }
 
 }

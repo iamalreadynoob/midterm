@@ -5,6 +5,7 @@ import communication.LinkOpener;
 import database.Clients;
 import database.ContentSuggester;
 import database.MusicSuggester;
+import exceptions.TerminalExceptions;
 
 import javax.swing.*;
 import java.io.*;
@@ -65,10 +66,7 @@ public class Process
 
         else if (command.equals(commandList.get(13))) {share();}
 
-        else
-        {
-            //TODO: exception!!!
-        }
+        else {cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(6).getError());}
     }
 
     private void clear() {cmdArea.setText(null);}
@@ -90,10 +88,7 @@ public class Process
             String answer = "\nname: " + clients.getClientNames().get(id) + "\nsurname: " + clients.getClientSurnames().get(id) + "\npriority: " + clients.getClientPriorities().get(id);
             cmdArea.setText(cmdArea.getText() + answer);
         }
-        else
-        {
-            //TODO: exception!!!
-        }
+        else {cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(7).getError());}
     }
 
     private void list()
@@ -113,10 +108,8 @@ public class Process
         {
             cmdArea.setText(cmdArea.getText() + answer);
         }
-        else
-        {
-            //TODO: exception!!!
-        }
+        else {cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(7).getError());}
+
     }
 
     private void close() {frame.dispose();}
@@ -160,7 +153,8 @@ public class Process
             receivers.add(arguments.get(1));
         }
 
-        new Email(arguments.get(0), receivers, arguments.get(2), clients);
+        try {new Email(arguments.get(0), receivers, arguments.get(2), clients);}
+        catch (Exception e){cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(7).getError());}
     }
 
     private void export()
@@ -197,36 +191,40 @@ public class Process
         }
         catch (IOException e){e.printStackTrace();}
 
-        for (int i = 0; i < lines.size(); i++)
+        try
         {
-            ArrayList<String> temp = new ArrayList<>();
-            int loc = 0;
-
-            while (loc < lines.get(i).length())
+            for (int i = 0; i < lines.size(); i++)
             {
-                if (lines.get(i).charAt(loc) != ' ')
+                ArrayList<String> temp = new ArrayList<>();
+                int loc = 0;
+
+                while (loc < lines.get(i).length())
                 {
-                    String item = null;
-
-                    while (loc < lines.get(i).length() && lines.get(i).charAt(loc) != ',')
+                    if (lines.get(i).charAt(loc) != ' ')
                     {
+                        String item = null;
 
-                        if (item == null) item = Character.toString(lines.get(i).charAt(loc));
-                        else item += Character.toString(lines.get(i).charAt(loc));
+                        while (loc < lines.get(i).length() && lines.get(i).charAt(loc) != ',')
+                        {
 
-                        loc++;
+                            if (item == null) item = Character.toString(lines.get(i).charAt(loc));
+                            else item += Character.toString(lines.get(i).charAt(loc));
+
+                            loc++;
+                        }
+
+                        temp.add(item);
                     }
 
-                    temp.add(item);
+                    loc++;
                 }
 
-                loc++;
+                clients.add(temp.get(0), temp.get(1), temp.get(2), temp.get(3), temp.get(4));
             }
 
-            clients.add(temp.get(0), temp.get(1), temp.get(2), temp.get(3), temp.get(4));
+            cmdArea.setText(cmdArea.getText() + "\nexit code 0");
         }
-
-        cmdArea.setText(cmdArea.getText() + "\nexit code 0");
+        catch (Exception e) {cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(7).getError());}
     }
 
     private void suggest()
@@ -287,10 +285,7 @@ public class Process
             int id = new Random().nextInt(content.getTitle().size());
             text = "You should watch this:\ntitle: " + content.getTitle().get(id) + "\nsynopsis: " + content.getSynopsis().get(id) + "\ngenre: " + content.getGenre().get(id) + "\naired: " + content.getAired().get(id) + "\nepisodes: " + content.getEpisodes().get(id) + "\nmembers: " + content.getMembers().get(id) + "\nscore in MyAnimeList: " + content.getScore().get(id) + "\nlink: " + content.getLink().get(id);
         }
-        else
-        {
-            //TODO: exception
-        }
+        else {cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(7).getError());}
 
         if (text != null)
         {
@@ -320,7 +315,8 @@ public class Process
             }
             else {receivers.add(arguments.get(2));}
 
-            new Email(sender, receivers, text, clients);
+            try {new Email(sender, receivers, text, clients);}
+            catch (Exception e){cmdArea.setText(cmdArea.getText() + "\n" + new TerminalExceptions(7).getError());}
         }
     }
 
