@@ -21,7 +21,7 @@ import java.util.stream.StreamSupport;
 public class Clients
 {
 
-    private List<String> clientIDs, clientNames, clientSurnames, clientEmails, clientPriorities;
+    private List<String> clientIDs, clientNames, clientSurnames, clientEmails, clientPriorities, clientPasswords;
 
     public Clients()
     {
@@ -33,6 +33,7 @@ public class Clients
     public List<String> getClientSurnames() {return clientSurnames;}
     public List<String> getClientEmails() {return clientEmails;}
     public List<String> getClientPriorities() {return clientPriorities;}
+    public List<String> getClientPasswords(){return clientPasswords;}
 
     private void call()
     {
@@ -44,7 +45,7 @@ public class Clients
 
         try
         {
-            CSVParser parser = CSVParser.parse(filePath, Charset.defaultCharset(), CSVFormat.DEFAULT.withHeader("id", "name", "surname", "email", "priority"));
+            CSVParser parser = CSVParser.parse(filePath, Charset.defaultCharset(), CSVFormat.DEFAULT.withHeader("id", "name", "surname", "email", "priority", "password"));
             Stream<CSVRecord> stream = StreamSupport.stream(parser.spliterator(), false);
             List<Map<String, String>> temp = stream.skip(1).map(record -> record.toMap()).collect(Collectors.toList());
 
@@ -53,6 +54,7 @@ public class Clients
             clientSurnames = temp.stream().map(column -> column.get("surname")).collect(Collectors.toList());
             clientEmails = temp.stream().map(column -> column.get("email")).collect(Collectors.toList());
             clientPriorities = temp.stream().map(column -> column.get("priority")).collect(Collectors.toList());
+            clientPasswords = temp.stream().map(column -> column.get("password")).collect(Collectors.toList());
         }
         catch (Exception e){e.printStackTrace();}
     }
@@ -63,6 +65,7 @@ public class Clients
         clientSurnames.add(surname);
         clientEmails.add(email);
         clientPriorities.add(priority);
+        clientPasswords.add("-");
 
         int id = Integer.parseInt(clientIDs.get(clientIDs.size() - 1)) + 1;
         clientIDs.add(Integer.toString(id));
@@ -76,13 +79,13 @@ public class Clients
         clientSurnames.add(surname);
         clientEmails.add(email);
         clientPriorities.add(priority);
+        clientPasswords.add(password);
 
         int id = Integer.parseInt(clientIDs.get(clientIDs.size() - 1)) + 1;
         clientIDs.add(Integer.toString(id));
 
         rewrite();
 
-        new Admins().addAdminPassword(clientIDs.get(clientIDs.size()-1), password);
     }
 
 
@@ -108,6 +111,7 @@ public class Clients
         clientSurnames.remove((int) id);
         clientEmails.remove((int) id);
         clientPriorities.remove((int) id);
+        clientPasswords.remove((int) id);
 
         for (int i = id; i < clientIDs.size(); i++)
         {
@@ -127,11 +131,11 @@ public class Clients
             FileWriter writer = new FileWriter(csvFile);
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
 
-            printer.printRecord("id", "name", "surname", "email", "priority");
+            printer.printRecord("id", "name", "surname", "email", "priority", "password");
 
             for (int i = 0; i < clientNames.size(); i++)
             {
-                printer.printRecord(clientIDs.get(i), clientNames.get(i), clientSurnames.get(i), clientEmails.get(i), clientPriorities.get(i));
+                printer.printRecord(clientIDs.get(i), clientNames.get(i), clientSurnames.get(i), clientEmails.get(i), clientPriorities.get(i), clientPasswords.get(i));
             }
 
             printer.close();

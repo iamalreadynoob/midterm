@@ -1,20 +1,15 @@
 package gui;
 
-import communication.Admins;
-import communication.Email;
-import communication.Receivers;
-import communication.Senders;
+import communication.*;
 import database.Clients;
 import database.SaveTypes;
 import database.Saves;
 import exceptions.UserExceptions;
+import terminal.Process;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Buttons implements IFrames
@@ -108,7 +103,7 @@ public class Buttons implements IFrames
                 if (Screen.specificReceiver.isVisible()) receivers.add(new Senders(Screen.specificReceiver.getText(), clients).findMail());
                 else receivers = new Receivers(Screen.receiverList, Screen.senderList, clients).getReceivers();
 
-                new Email(sender.findMail(), sender.findID().toString(), receivers, Screen.mailText.getText());
+                new Email(sender.findMail(), receivers, Screen.mailText.getText(), clients);
 
                 Screen.mailText.setText(null);
             }
@@ -223,7 +218,45 @@ public class Buttons implements IFrames
     @Override
     public void terminalFrame()
     {
+        Screen.cmdArea.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent focusEvent) {
 
+                Screen.cmdArea.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent keyEvent) {
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent keyEvent)
+                    {
+                        if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
+                        {
+                            new Process(Screen.cmdArea, clients, frame);
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent keyEvent) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void focusLost(FocusEvent focusEvent) {
+
+            }
+        });
+
+        Screen.terminalHelp.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent)
+            {
+                new LinkOpener("https://allinoneforsmthng.blogspot.com/2023/04/terminal-commands.html");
+            }
+        });
     }
 
     @Override

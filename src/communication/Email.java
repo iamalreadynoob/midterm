@@ -1,6 +1,6 @@
 package communication;
 
-import database.Communicator;
+import database.Clients;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
@@ -13,20 +13,19 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 
-public class Email extends Communicator
+public class Email
 {
-    private String adminID,sender, text, password;
+    private String sender, text, password;
     private ArrayList<String> receiver;
     private MimeBodyPart attachment;
+    private Clients clients;
     private boolean isAttached;
-    public Email(String sender, String adminID, ArrayList<String> receiver, String text)
+    public Email(String sender, ArrayList<String> receiver, String text, Clients clients)
     {
-        super("data/admins.txt");
-
-        this.adminID = adminID;
         this.sender = sender;
         this.receiver = receiver;
         this.text = text;
+        this.clients = clients;
 
         attachment = new MimeBodyPart();
         isAttached = false;
@@ -79,42 +78,26 @@ public class Email extends Communicator
 
     private String getPassword()
     {
-        String password = null;
+       int loc = 0;
+       for (int i = 0; i < clients.getClientPasswords().size(); i++)
+       {
+           if (sender.equals(clients.getClientEmails().get(i)))
+           {
+               loc = i;
+               break;
+           }
+       }
 
-        String admins = getRawData();
 
-        for (int i = 0; i < admins.length(); i++)
-        {
-            if (admins.charAt(i) == adminID.charAt(0))
-            {
-                if (i >= 1 && admins.charAt(i-1) == '{' && admins.charAt(i+1) == '}')
-                {
-                    int loc = i+2;
-
-                    while (loc < admins.length() && admins.charAt(loc) != '{')
-                    {
-                        if (password == null) password = Character.toString(admins.charAt(loc));
-                        else password += Character.toString(admins.charAt(loc));
-
-                        loc++;
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        return password;
+       return clients.getClientPasswords().get(loc);
     }
 
     private void checkReserved()
     {
-        if (!new ReservedShortcuts().isCommand(text))
+        if (new ReservedShortcuts().isCommand(text))
         {
             if (text.startsWith("/test"))
             {
-                text = "The test message doesn't mean garbage all to time! At least, just for this time. (Hint: check the attachment)";
-
                 File attachedFile = new File("data/never-gonna-give-you-up.docx");
                 FileDataSource source = new FileDataSource(attachedFile);
 
@@ -124,6 +107,11 @@ public class Email extends Communicator
                     attachment.setFileName(attachedFile.getName());
                     isAttached =true;
                 }catch (Exception e){e.printStackTrace();}
+            }
+
+            else if (text.startsWith("/roblox"))
+            {
+                text = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             }
         }
     }

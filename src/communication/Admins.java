@@ -1,41 +1,13 @@
 package communication;
 
+import database.Clients;
 import database.Saves;
 
 import javax.swing.*;
-import java.io.*;
 import java.util.ArrayList;
 
 public class Admins
 {
-
-    public void addAdminPassword(String id, String password)
-    {
-        try
-        {
-            File passwords = new File("data/admins.txt");
-            FileReader reader = new FileReader(passwords);
-            BufferedReader buffered = new BufferedReader(reader);
-
-            String data = null;
-
-            String line;
-            while ((line = buffered.readLine()) != null)
-            {
-                if (data == null) data = line;
-                else data += line;
-            }
-
-            data += "{" + id + "}" + password;
-
-            System.out.println(data);
-
-            FileWriter writer = new FileWriter(passwords);
-            writer.write(data);
-            writer.close();
-        }catch (IOException e){e.printStackTrace();}
-    }
-
     public void askPassword(JTextField exceptionSection)
     {
         ArrayList<String> script = new Saves().getScript();

@@ -10,6 +10,7 @@ public class ReservedShortcuts
     protected ReservedShortcuts()
     {
         commands = new ArrayList<>();
+        fill();
     }
 
     protected boolean isCommand(String text)
@@ -31,7 +32,7 @@ public class ReservedShortcuts
     private void fill()
     {
         commands.add("/test");
-        commands.add("/anime");
+        commands.add("/roblox");
     }
 
 }

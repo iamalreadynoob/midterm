@@ -38,6 +38,7 @@ public class Screen extends JFrame
     {
         this.setSize(600, 400);
         this.setLayout(null);
+        this.setResizable(false);
         this.setTitle("communicator");
 
         new CreateNew();
