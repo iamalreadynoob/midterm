@@ -1,7 +1,5 @@
 package communication;
 
-import database.Communicator;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,8 +15,6 @@ public class Domains
         publicDomains = new ArrayList<>();
 
         listPublicDomains();
-
-        //System.out.println(publicDomains.get(14));
     }
 
     public boolean isIncluded(String mail)
@@ -48,6 +44,5 @@ public class Domains
             while ((line = bufferedReader.readLine()) != null) publicDomains.add(line);
         }catch (IOException e){e.printStackTrace();}
     }
-
 
 }

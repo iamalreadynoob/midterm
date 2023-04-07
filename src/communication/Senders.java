@@ -2,8 +2,6 @@ package communication;
 
 import database.Clients;
 
-import javax.swing.*;
-
 public class Senders
 {
     String sender;
@@ -13,24 +11,6 @@ public class Senders
     {
         this.sender = sender;
         this.clients = clients;
-    }
-
-    public Integer findID()
-    {
-        Integer id = null;
-
-        for (int i = 0; i < clients.getClientEmails().size(); i++)
-        {
-            String tempName = clients.getClientNames().get(i) + " " + clients.getClientSurnames().get(i);
-
-            if (tempName.equals(sender))
-            {
-                id = Integer.parseInt(clients.getClientIDs().get(i));
-                break;
-            }
-        }
-
-        return id;
     }
 
     public String findMail()

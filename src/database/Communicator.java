@@ -109,5 +109,4 @@ public abstract class Communicator
         return raw;
     }
 
-
 }

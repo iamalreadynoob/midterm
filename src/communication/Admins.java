@@ -1,6 +1,5 @@
 package communication;
 
-import database.Clients;
 import database.Saves;
 
 import javax.swing.*;
