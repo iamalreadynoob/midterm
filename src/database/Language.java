@@ -2,7 +2,7 @@ package database;
 
 public class Language extends Communicator
 {
-    String language;
+    private String language;
     public Language()
     {
         super("data/saved.txt");

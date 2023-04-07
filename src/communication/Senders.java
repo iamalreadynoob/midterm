@@ -4,8 +4,8 @@ import database.Clients;
 
 public class Senders
 {
-    String sender;
-    Clients clients;
+    private String sender;
+    private Clients clients;
 
     public Senders(String sender, Clients clients)
     {

@@ -27,7 +27,7 @@ public class Theme implements IFrames
         back();
     }
 
-    public void background(JFrame frame)
+    private void background(JFrame frame)
     {
         if (isDark) frame.getContentPane().setBackground(Color.BLACK);
         else frame.getContentPane().setBackground(Color.WHITE);
